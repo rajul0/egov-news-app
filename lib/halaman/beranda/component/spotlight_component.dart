@@ -56,13 +56,13 @@ class _SpotlightComponentState extends State<SpotlightComponent> {
                 child: Stack(
                   fit: StackFit.expand,
                   children: [
-                    Opacity(
-                      opacity: 0.6,
-                      child: Image(
-                        width: double.infinity,
-                        fit: BoxFit.cover,
-                        image: AssetImage(imagePath),
-                      ),
+                    Image(
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                      image: AssetImage(imagePath),
+                    ),
+                    Container(
+                      color: Colors.black.withOpacity(0.4),
                     ),
                     Positioned(
                       bottom: 30.0,
@@ -113,7 +113,7 @@ class _SpotlightComponentState extends State<SpotlightComponent> {
                       ? 30.0
                       : 8.0, // Set width based on selected index
                   height: 8.0,
-                  margin: EdgeInsets.symmetric(horizontal: 5.0),
+                  margin: EdgeInsets.symmetric(horizontal: 2.0),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(
                         index == _selectedIndex ? 15.0 : 50.0),

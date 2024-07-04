@@ -1,3 +1,4 @@
+import 'package:egov_news_app/halaman/beranda/component/hotnews_component.dart';
 import 'package:egov_news_app/halaman/beranda/component/spotlight_component.dart';
 import 'package:flutter/material.dart';
 
@@ -22,6 +23,8 @@ class _HalamanBerandaState extends State<HalamanBeranda> {
             bottom: 32.0,
           ),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -48,9 +51,15 @@ class _HalamanBerandaState extends State<HalamanBeranda> {
                       )
                     ],
                   ),
-                  Image.asset(
-                    "assets/gambar/notif-logo.png",
-                    width: 50.0,
+                  InkWell(
+                    onTap: () {},
+                    borderRadius: BorderRadius.circular(50.0),
+                    child: Ink(
+                      child: Image.asset(
+                        "assets/gambar/notif-logo.png",
+                        width: 50.0,
+                      ),
+                    ),
                   )
                 ],
               ),
@@ -58,6 +67,10 @@ class _HalamanBerandaState extends State<HalamanBeranda> {
                 height: 32.0,
               ),
               SpotlightComponent(),
+              SizedBox(
+                height: 32.0,
+              ),
+              HotNewsComponent(),
             ],
           ),
         ),

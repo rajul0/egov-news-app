@@ -10,68 +10,88 @@ class HalamanBeranda extends StatefulWidget {
 }
 
 class _HalamanBerandaState extends State<HalamanBeranda> {
+  Key _key = UniqueKey();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  Future<void> _refresh() async {
+    setState(() {
+      _key = UniqueKey();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _key,
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(
-            left: 24.0,
-            top: 50.0,
-            right: 24.0,
-            bottom: 32.0,
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Selamat Pagi",
-                        style: TextStyle(
-                            color: Color(0xFF95A6AA),
-                            fontFamily: "Mulish",
-                            fontSize: 14.0,
-                            fontWeight: FontWeight.w400),
-                      ),
-                      Text(
-                        "Sirajul Ilmi",
-                        style: TextStyle(
-                            color: Color(0xFF1A434E),
-                            fontFamily: "Mulish",
-                            fontSize: 24.0,
-                            fontWeight: FontWeight.w700),
-                      )
-                    ],
-                  ),
-                  InkWell(
-                    onTap: () {},
-                    borderRadius: BorderRadius.circular(50.0),
-                    child: Ink(
-                      child: Image.asset(
-                        "assets/gambar/notif-logo.png",
-                        width: 50.0,
-                      ),
+      body: RefreshIndicator(
+        color: Color(0xFFBDBDBD),
+        backgroundColor: Color(0xFFFFFFFF),
+        onRefresh: _refresh,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.only(
+              left: 24.0,
+              top: 50.0,
+              right: 24.0,
+              bottom: 32.0,
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Selamat Pagi",
+                          style: TextStyle(
+                              color: Color(0xFF95A6AA),
+                              fontFamily: "Mulish",
+                              fontSize: 14.0,
+                              fontWeight: FontWeight.w400),
+                        ),
+                        Text(
+                          "Sirajul Ilmi",
+                          style: TextStyle(
+                              color: Color(0xFF1A434E),
+                              fontFamily: "Mulish",
+                              fontSize: 24.0,
+                              fontWeight: FontWeight.w700),
+                        )
+                      ],
                     ),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 32.0,
-              ),
-              SpotlightComponent(),
-              SizedBox(
-                height: 32.0,
-              ),
-              HotNewsComponent(),
-            ],
+                    InkWell(
+                      onTap: () {},
+                      borderRadius: BorderRadius.circular(50.0),
+                      child: Ink(
+                        child: Image.asset(
+                          "assets/gambar/notif-logo.png",
+                          width: 50.0,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: 32.0,
+                ),
+                SpotlightComponent(),
+                SizedBox(
+                  height: 32.0,
+                ),
+                HotNewsComponent(),
+              ],
+            ),
           ),
         ),
       ),

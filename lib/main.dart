@@ -18,7 +18,7 @@ class NewsApp extends StatelessWidget {
       theme: ThemeData(fontFamily: 'Mulish'),
       home: HalamanAwal(),
       routes: {
-        '/home': (context) => HalamanBeranda(), // Define your home screen route
+        '/home': (context) => HalamanBeranda(),
       },
     );
   }

@@ -43,9 +43,9 @@ class _HalamanDetailBeritaState extends State<HalamanDetailBerita> {
                     borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(20.0),
                         bottomRight: Radius.circular(20.0)),
-                    child: Image.asset(
-                      width: double.infinity,
+                    child: Image.network(
                       widget.gambarBerita,
+                      width: double.infinity,
                       fit: BoxFit.cover,
                     ),
                   ),

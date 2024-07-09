@@ -12,7 +12,7 @@ class _HalamanAwalState extends State<HalamanAwal> {
     super.initState();
     Timer(Duration(seconds: 3), () {
       // Navigate to the next screen after 3 seconds
-      Navigator.of(context).pushReplacementNamed('/home');
+      Navigator.of(context).pushReplacementNamed('/homeNavbar');
     });
   }
 

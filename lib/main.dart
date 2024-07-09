@@ -1,3 +1,4 @@
+import 'package:egov_news_app/halaman/beranda/beranda_navbar.dart';
 import 'package:egov_news_app/halaman/halaman_awal.dart';
 import 'package:egov_news_app/halaman/beranda/halaman_beranda.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,7 @@ class NewsApp extends StatelessWidget {
       home: HalamanAwal(),
       routes: {
         '/home': (context) => HalamanBeranda(),
+        '/homeNavbar': (context) => BerandaNavbar(),
       },
     );
   }

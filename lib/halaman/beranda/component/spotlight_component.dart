@@ -136,6 +136,8 @@ class _SpotlightComponentState extends State<SpotlightComponent> {
                 children: [
                   CarouselSlider(
                     options: CarouselOptions(
+                      autoPlay: true,
+                      autoPlayInterval: Duration(seconds: 5),
                       viewportFraction: 1,
                       autoPlayCurve: Curves.fastOutSlowIn, // Animation curve
                       onPageChanged: (index, reason) {

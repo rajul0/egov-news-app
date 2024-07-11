@@ -1,4 +1,7 @@
+import 'package:egov_news_app/halaman/beranda/component/feed_component.dart';
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class HotNewsComponent extends StatefulWidget {
   const HotNewsComponent({super.key});
@@ -85,6 +88,61 @@ class _HotNewsComponentState extends State<HotNewsComponent> {
     }
   ];
 
+  static const _pageSize = 20;
+  int _currentPage = 1;
+  List<Feed> _feeds = [];
+  bool _isLoading = false;
+  bool _hasMore = true;
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchFeeds(_currentPage);
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+              _scrollController.position.maxScrollExtent &&
+          !_isLoading &&
+          _hasMore) {
+        _fetchFeeds(_currentPage);
+      }
+    });
+  }
+
+  Future<void> _fetchFeeds(int page) async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      final response = await http.get(Uri.parse(
+          'https://sinergi.bandaacehkota.go.id/api/feeds?limit=$_pageSize&page=$page'));
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body) as List;
+        final newFeeds = data.map((json) => Feed.fromJson(json)).toList();
+
+        setState(() {
+          _feeds.addAll(newFeeds);
+          _isLoading = false;
+          _currentPage++;
+          if (newFeeds.length < _pageSize) {
+            _hasMore = false;
+          }
+        });
+      } else {
+        setState(() {
+          _isLoading = false;
+          _hasMore = false;
+        });
+      }
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+        _hasMore = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -152,23 +210,45 @@ class _HotNewsComponentState extends State<HotNewsComponent> {
           SizedBox(
             height: 24.0,
           ),
-          Column(
-            children: List.generate(daftarBerita.length, (index) {
-              return Column(
-                children: [
-                  _beritaBaruCard(
-                    context,
-                    daftarBerita[index]["image"],
-                    daftarBerita[index]["title"],
-                    daftarBerita[index]["organization_name"],
-                  ),
-                  SizedBox(
-                    height: 20.0,
-                  ),
-                ],
-              );
-            }),
-          )
+          FutureBuilder<void>(
+            future: _fetchFeeds(_currentPage),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting &&
+                  _feeds.isEmpty) {
+                return Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+                return Center(child: Text('Error: ${snapshot.error}'));
+              } else {
+                return ListView.builder(
+                  controller: _scrollController,
+                  itemCount: _feeds.length + (_hasMore ? 1 : 0),
+                  itemBuilder: (context, index) {
+                    if (index == _feeds.length) {
+                      return Center(child: CircularProgressIndicator());
+                    } else {
+                      return Column(
+                        children: List.generate(_feeds.length, (index) {
+                          return Column(
+                            children: [
+                              _beritaBaruCard(
+                                context,
+                                _feeds[index].image,
+                                _feeds[index].title,
+                                _feeds[index].organization_name,
+                              ),
+                              SizedBox(
+                                height: 20.0,
+                              ),
+                            ],
+                          );
+                        }),
+                      );
+                    }
+                  },
+                );
+              }
+            },
+          ),
         ],
       ),
     );

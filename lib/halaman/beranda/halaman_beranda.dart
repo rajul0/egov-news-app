@@ -1,5 +1,8 @@
-import 'package:egov_news_app/halaman/beranda/component/hotnews_component.dart';
+import 'package:egov_news_app/halaman/beranda/berita_selengkapnya.dart';
+import 'package:egov_news_app/halaman/beranda/component/berita_baru_card.dart';
 import 'package:egov_news_app/halaman/beranda/component/spotlight_component.dart';
+import 'package:egov_news_app/halaman/detail_berita/halaman_detail_berita.dart';
+import 'package:egov_news_app/proses/getData.dart';
 import 'package:flutter/material.dart';
 
 class HalamanBeranda extends StatefulWidget {
@@ -12,16 +15,24 @@ class HalamanBeranda extends StatefulWidget {
 class _HalamanBerandaState extends State<HalamanBeranda> {
   Key _key = UniqueKey();
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
+  // final ScrollController _scrollController = ScrollController();
+
+  List<String> kategoriBeritas = [
+    "Politik",
+    "Bisnis",
+    "Investasi",
+    "Lainnya",
+  ];
 
   Future<void> _refresh() async {
     setState(() {
       _key = UniqueKey();
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override
@@ -45,42 +56,30 @@ class _HalamanBerandaState extends State<HalamanBeranda> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Selamat Pagi",
-                          style: TextStyle(
-                              color: Color(0xFF95A6AA),
-                              fontFamily: "Mulish",
-                              fontSize: 14.0,
-                              fontWeight: FontWeight.w400),
-                        ),
-                        Text(
-                          "Sirajul Ilmi",
-                          style: TextStyle(
-                              color: Color(0xFF1A434E),
-                              fontFamily: "Mulish",
-                              fontSize: 24.0,
-                              fontWeight: FontWeight.w700),
-                        )
-                      ],
-                    ),
-                    InkWell(
-                      onTap: () {},
-                      borderRadius: BorderRadius.circular(50.0),
-                      child: Ink(
-                        child: Image.asset(
-                          "assets/gambar/notif-logo.png",
-                          width: 50.0,
-                        ),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Selamat Datang di",
+                        style: TextStyle(
+                            color: Color(0xFF95A6AA),
+                            fontFamily: "Mulish",
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.w400),
                       ),
-                    )
-                  ],
+                      Text(
+                        "SINERGI",
+                        style: TextStyle(
+                            color: Color(0xFF1A434E),
+                            fontFamily: "Mulish",
+                            fontSize: 24.0,
+                            fontWeight: FontWeight.w700),
+                      )
+                    ],
+                  ),
                 ),
                 SizedBox(
                   height: 32.0,
@@ -89,7 +88,104 @@ class _HalamanBerandaState extends State<HalamanBeranda> {
                 SizedBox(
                   height: 32.0,
                 ),
-                HotNewsComponent(),
+                Container(
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Flexible(
+                            child: Text(
+                              "Temukan Berita Terbaru",
+                              style: TextStyle(
+                                color: Color(0xFF1A434E),
+                                fontFamily: "Mulish",
+                                fontSize: 24.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 20.0,
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 16.0,
+                      ),
+                      SizedBox(
+                        height: 24.0,
+                      ),
+                      FutureBuilder<void>(
+                        future: ambilBeritaBaru(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Center(child: CircularProgressIndicator());
+                          } else if (snapshot.hasError) {
+                            return Center(
+                                child: Text('Error: ${snapshot.error}'));
+                          } else {
+                            List data = snapshot.data as List;
+                            return Column(
+                              children: List.generate(data.length, (index) {
+                                return Column(
+                                  children: [
+                                    beritaBaruCard(
+                                        context,
+                                        data[index]['image'],
+                                        data[index]['title'],
+                                        data[index]['organization_name'], () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              HalamanDetailBerita(
+                                            gambarBerita: data[index]["image"],
+                                            judulBerita: data[index]["title"],
+                                            berita: "Ini isi berita",
+                                            penulis: data[index]
+                                                ["organization_name"],
+                                          ),
+                                        ),
+                                      );
+                                    }),
+                                    SizedBox(
+                                      height: 20.0,
+                                    ),
+                                  ],
+                                );
+                              }),
+                            );
+                          }
+                        },
+                      ),
+                      SizedBox(
+                        height: 10.0,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => HalamanBeritaSelengkapnya(),
+                            ),
+                          );
+                        },
+                        child: Text(
+                          "Berita Lainnya",
+                          style: TextStyle(
+                              color: Color(0xFF95A6AA),
+                              fontFamily: "Mulish",
+                              fontSize: 14.0,
+                              fontWeight: FontWeight.w400),
+                        ),
+                      )
+                    ],
+                  ),
+                )
               ],
             ),
           ),

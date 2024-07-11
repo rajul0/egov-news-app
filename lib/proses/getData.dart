@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-Future<List> ambilBeritaSpotlight() async {
+Future<List> ambilBerita(banyakBerita) async {
   final response = await http.get(Uri.parse(
-      'https://sinergi.bandaacehkota.go.id/api/feeds?limit=3&&page=1'));
+      'https://sinergi.bandaacehkota.go.id/api/feeds?limit=${banyakBerita}&&page=1'));
 
   if (response.statusCode == 200) {
     var data = jsonDecode(response.body);
@@ -13,9 +13,9 @@ Future<List> ambilBeritaSpotlight() async {
   }
 }
 
-Future<List> ambilBeritaBaru() async {
+Future<List> ambilBeritaInong(banyakBerita) async {
   final response = await http.get(Uri.parse(
-      'https://sinergi.bandaacehkota.go.id/api/feeds?limit=15&&page=1'));
+      'https://sinergi.bandaacehkota.go.id/api/inong?limit=${banyakBerita}'));
 
   if (response.statusCode == 200) {
     var data = jsonDecode(response.body);

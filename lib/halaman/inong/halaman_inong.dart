@@ -5,14 +5,14 @@ import 'package:egov_news_app/halaman/detail_berita/halaman_detail_berita.dart';
 import 'package:egov_news_app/proses/getData.dart';
 import 'package:flutter/material.dart';
 
-class HalamanBeranda extends StatefulWidget {
-  const HalamanBeranda({super.key});
+class HalamanInong extends StatefulWidget {
+  const HalamanInong({super.key});
 
   @override
-  State<HalamanBeranda> createState() => _HalamanBerandaState();
+  State<HalamanInong> createState() => _HalamanInongState();
 }
 
-class _HalamanBerandaState extends State<HalamanBeranda> {
+class _HalamanInongState extends State<HalamanInong> {
   Key _key = UniqueKey();
 
   Future<void> _refresh() async {
@@ -62,12 +62,13 @@ class _HalamanBerandaState extends State<HalamanBeranda> {
                             fontWeight: FontWeight.w400),
                       ),
                       Text(
-                        "SINERGI",
+                        "Informasi Gampong (INONG)",
                         style: TextStyle(
-                            color: Color(0xFF1A434E),
-                            fontFamily: "Mulish",
-                            fontSize: 24.0,
-                            fontWeight: FontWeight.w700),
+                          color: Color(0xFF1A434E),
+                          fontFamily: "Mulish",
+                          fontSize: 24.0,
+                          fontWeight: FontWeight.w700,
+                        ),
                       )
                     ],
                   ),
@@ -76,7 +77,7 @@ class _HalamanBerandaState extends State<HalamanBeranda> {
                   height: 32.0,
                 ),
                 SpotlightComponent(
-                  jenisBerita: "SINERGI",
+                  jenisBerita: "INONG",
                 ),
                 SizedBox(
                   height: 32.0,
@@ -112,7 +113,7 @@ class _HalamanBerandaState extends State<HalamanBeranda> {
                         height: 24.0,
                       ),
                       FutureBuilder<void>(
-                        future: ambilBerita(15),
+                        future: ambilBeritaInong(15),
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {

@@ -1,5 +1,6 @@
 import 'package:egov_news_app/halaman/beranda/halaman_beranda.dart';
 import 'package:egov_news_app/halaman/dummy_page.dart';
+import 'package:egov_news_app/halaman/inong/halaman_inong.dart';
 import 'package:flutter/material.dart';
 
 class BerandaNavbar extends StatefulWidget {
@@ -19,7 +20,7 @@ class _BerandaNavbarState extends State<BerandaNavbar> {
 
   final List<Widget> _widgetOptions = [
     HalamanBeranda(),
-    DummyPage(),
+    HalamanInong(),
     DummyPage(),
     DummyPage(),
   ];

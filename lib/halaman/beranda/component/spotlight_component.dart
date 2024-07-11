@@ -5,27 +5,14 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:shimmer/shimmer.dart';
 
 class SpotlightComponent extends StatefulWidget {
-  const SpotlightComponent({super.key});
+  final String jenisBerita;
+  const SpotlightComponent({Key? key, required this.jenisBerita});
 
   @override
   State<SpotlightComponent> createState() => _SpotlightComponentState();
 }
 
 class _SpotlightComponentState extends State<SpotlightComponent> {
-  List imageSliders = [
-    "assets/gambar/sampel-news-1.jpg",
-    "assets/gambar/sampel-news-2.jpg",
-    "assets/gambar/sample-news-3.jpg",
-  ];
-
-  List judulBerita = [
-    "Wujudkan Generasi Sehat Dan Cerdas Melalui Upaya Peningkatan Skrining Layak Hamil Dan Pelayanan ANC Terintegrasi",
-    "JAUHI NARKOTIKA DI LINGKUNGAN DISDIKBUD",
-    "Sekretaris Disdikbud Banda Aceh Buka Sosialisasi Anti Korupsi dan Gratifikasi"
-  ];
-
-  List penulis = ["DINKESKOTA", "Disdikbud", "ADMIN2"];
-
   var _selectedIndex = 0;
 
   List? dataBerita;
@@ -35,11 +22,15 @@ class _SpotlightComponentState extends State<SpotlightComponent> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    ambilBerita();
+    fetchData();
   }
 
-  Future<void> ambilBerita() async {
-    dataBerita = await ambilBeritaSpotlight();
+  Future<void> fetchData() async {
+    if (widget.jenisBerita == "SINERGI") {
+      dataBerita = await ambilBerita(3);
+    } else if (widget.jenisBerita == "INONG") {
+      dataBerita = await ambilBeritaInong(3);
+    }
     if (mounted) {
       setState(() {
         isLoading = false;
@@ -146,7 +137,7 @@ class _SpotlightComponentState extends State<SpotlightComponent> {
                         });
                       },
                     ),
-                    items: imageSliders.map((imagePath) {
+                    items: dataBerita!.map((imagePath) {
                       return ClipRRect(
                         borderRadius: BorderRadius.circular(15.0),
                         child: Stack(
@@ -223,7 +214,7 @@ class _SpotlightComponentState extends State<SpotlightComponent> {
                     right: 25.0,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: imageSliders.asMap().entries.map((entry) {
+                      children: dataBerita!.asMap().entries.map((entry) {
                         int index = entry.key;
                         return AnimatedContainer(
                           duration: Duration(milliseconds: 300),

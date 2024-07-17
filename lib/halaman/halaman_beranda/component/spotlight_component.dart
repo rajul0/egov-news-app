@@ -1,4 +1,4 @@
-import 'package:egov_news_app/halaman/detail_berita/halaman_detail_berita.dart';
+import 'package:egov_news_app/halaman/halaman_detail_berita/halaman_detail_berita.dart';
 import 'package:egov_news_app/proses/getData.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -30,6 +30,8 @@ class _SpotlightComponentState extends State<SpotlightComponent> {
       dataBerita = await ambilBerita(3);
     } else if (widget.jenisBerita == "INONG") {
       dataBerita = await ambilBeritaInong(3);
+    } else if (widget.jenisBerita == "AGAM") {
+      dataBerita = await ambilBeritaAgam(3);
     }
     if (mounted) {
       setState(() {

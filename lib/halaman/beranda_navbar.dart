@@ -1,6 +1,7 @@
-import 'package:egov_news_app/halaman/beranda/halaman_beranda.dart';
-import 'package:egov_news_app/halaman/dummy_page.dart';
-import 'package:egov_news_app/halaman/inong/halaman_inong.dart';
+import 'package:egov_news_app/halaman/halaman_agam/halaman_agam.dart';
+import 'package:egov_news_app/halaman/halaman_beranda/halaman_beranda.dart';
+import 'package:egov_news_app/halaman/halaman_inong/halaman_inong.dart';
+import 'package:egov_news_app/halaman/halaman_statistik/halaman_statistik.dart';
 import 'package:flutter/material.dart';
 
 class BerandaNavbar extends StatefulWidget {
@@ -21,8 +22,8 @@ class _BerandaNavbarState extends State<BerandaNavbar> {
   final List<Widget> _widgetOptions = [
     HalamanBeranda(),
     HalamanInong(),
-    DummyPage(),
-    DummyPage(),
+    HalamanAgam(),
+    HalamanStatistik(),
   ];
 
   void _onItemTapped(int index) {
@@ -37,11 +38,14 @@ class _BerandaNavbarState extends State<BerandaNavbar> {
       backgroundColor: Colors.white,
       body: _widgetOptions[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Color(0xFF1A434E),
+        unselectedItemColor: Color(0xFF95A6AA),
+        selectedFontSize: 12.0,
         backgroundColor: Colors.white,
         type: BottomNavigationBarType.fixed,
         items: [
           BottomNavigationBarItem(
-            label: '',
+            label: 'Beranda',
             icon: Padding(
               padding: const EdgeInsets.only(top: 10.0),
               child: Image(
@@ -59,7 +63,7 @@ class _BerandaNavbarState extends State<BerandaNavbar> {
             ),
           ),
           BottomNavigationBarItem(
-            label: '',
+            label: 'INONG',
             icon: Padding(
               padding: const EdgeInsets.only(top: 10.0),
               child: Image(
@@ -77,7 +81,7 @@ class _BerandaNavbarState extends State<BerandaNavbar> {
             ),
           ),
           BottomNavigationBarItem(
-            label: '',
+            label: 'AGAM',
             icon: Padding(
               padding: const EdgeInsets.only(top: 10.0),
               child: Image(
@@ -95,7 +99,7 @@ class _BerandaNavbarState extends State<BerandaNavbar> {
             ),
           ),
           BottomNavigationBarItem(
-            label: '',
+            label: 'Statistik',
             icon: Padding(
               padding: const EdgeInsets.only(top: 10.0),
               child: Image(

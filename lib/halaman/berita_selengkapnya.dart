@@ -1,5 +1,5 @@
-import 'package:egov_news_app/halaman/beranda/component/berita_baru_card.dart';
-import 'package:egov_news_app/halaman/detail_berita/halaman_detail_berita.dart';
+import 'package:egov_news_app/halaman/component/berita_baru_card.dart';
+import 'package:egov_news_app/halaman/halaman_detail_berita/halaman_detail_berita.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -82,26 +82,35 @@ class _HalamanBeritaSelengkapnyaState extends State<HalamanBeritaSelengkapnya> {
             children: [
               Align(
                 alignment: Alignment.topLeft,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: Row(
                   children: [
-                    Text(
-                      "Selamat Datang di",
-                      style: TextStyle(
-                          color: Color(0xFF95A6AA),
-                          fontFamily: "Mulish",
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.w400),
+                    IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: Icon(Icons.arrow_back_sharp)),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Selamat Datang di",
+                          style: TextStyle(
+                              color: Color(0xFF95A6AA),
+                              fontFamily: "Mulish",
+                              fontSize: 14.0,
+                              fontWeight: FontWeight.w400),
+                        ),
+                        Text(
+                          "SINERGI",
+                          style: TextStyle(
+                              color: Color(0xFF1A434E),
+                              fontFamily: "Mulish",
+                              fontSize: 24.0,
+                              fontWeight: FontWeight.w700),
+                        )
+                      ],
                     ),
-                    Text(
-                      "SINERGI",
-                      style: TextStyle(
-                          color: Color(0xFF1A434E),
-                          fontFamily: "Mulish",
-                          fontSize: 24.0,
-                          fontWeight: FontWeight.w700),
-                    )
                   ],
                 ),
               ),

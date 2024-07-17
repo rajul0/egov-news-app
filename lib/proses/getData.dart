@@ -24,3 +24,15 @@ Future<List> ambilBeritaInong(banyakBerita) async {
     throw Exception('Failed to load data');
   }
 }
+
+Future<List> ambilBeritaAgam(banyakBerita) async {
+  final response = await http.get(Uri.parse(
+      'https://sinergi.bandaacehkota.go.id/api/agam?limit=${banyakBerita}'));
+
+  if (response.statusCode == 200) {
+    var data = jsonDecode(response.body);
+    return data["data"];
+  } else {
+    throw Exception('Failed to load data');
+  }
+}

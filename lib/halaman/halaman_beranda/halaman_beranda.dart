@@ -1,7 +1,7 @@
-import 'package:egov_news_app/halaman/beranda/berita_selengkapnya.dart';
-import 'package:egov_news_app/halaman/beranda/component/berita_baru_card.dart';
-import 'package:egov_news_app/halaman/beranda/component/spotlight_component.dart';
-import 'package:egov_news_app/halaman/detail_berita/halaman_detail_berita.dart';
+import 'package:egov_news_app/halaman/berita_selengkapnya.dart';
+import 'package:egov_news_app/halaman/component/berita_baru_card.dart';
+import 'package:egov_news_app/halaman/halaman_beranda/component/spotlight_component.dart';
+import 'package:egov_news_app/halaman/halaman_detail_berita/halaman_detail_berita.dart';
 import 'package:egov_news_app/proses/getData.dart';
 import 'package:flutter/material.dart';
 

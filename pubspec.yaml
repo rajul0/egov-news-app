@@ -40,6 +40,7 @@ dependencies:
   infinite_scroll_pagination: ^4.0.0
   logger: ^2.3.0
   webview_flutter: ^4.8.0
+  html: ^0.15.4
 
 dev_dependencies:
   flutter_test:

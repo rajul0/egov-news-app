@@ -1,8 +1,7 @@
 import 'package:egov_news_app/halaman/component/berita_baru_card.dart';
 import 'package:egov_news_app/halaman/halaman_detail_berita/halaman_detail_berita.dart';
+import 'package:egov_news_app/proses/getData.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class HalamanBeritaSelengkapnya extends StatefulWidget {
@@ -33,21 +32,15 @@ class _HalamanBeritaSelengkapnyaState extends State<HalamanBeritaSelengkapnya> {
 
   Future<void> _fetchFeeds(int pageKey) async {
     try {
-      final response = await http.get(Uri.parse(
-          'https://sinergi.bandaacehkota.go.id/api/feeds?limit=$_pageSize&page=$pageKey'));
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body)["data"] as List;
-        final newFeeds = data.map((json) => Feed.fromJson(json)).toList();
+      final data = await ambilBerita(_pageSize, pageKey: pageKey);
+      final newFeeds = data.map((json) => Feed.fromJson(json)).toList();
 
-        final isLastPage = newFeeds.length < _pageSize;
-        if (isLastPage) {
-          _pagingController.appendLastPage(newFeeds);
-        } else {
-          final nextPageKey = pageKey + 1;
-          _pagingController.appendPage(newFeeds, nextPageKey);
-        }
+      final isLastPage = newFeeds.length < _pageSize;
+      if (isLastPage) {
+        _pagingController.appendLastPage(newFeeds);
       } else {
-        _pagingController.error = 'Error loading page';
+        final nextPageKey = pageKey + 1;
+        _pagingController.appendPage(newFeeds, nextPageKey);
       }
     } catch (e) {
       _pagingController.error = 'Error loading page';

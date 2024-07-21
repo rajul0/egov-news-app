@@ -159,7 +159,7 @@ class _HalamanBerandaState extends State<HalamanBeranda> {
                         height: 10.0,
                       ),
                       GestureDetector(
-                        onTap: () {
+                        onTap: () async {
                           Navigator.push(
                             context,
                             MaterialPageRoute(

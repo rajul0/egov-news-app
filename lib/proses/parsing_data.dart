@@ -1,8 +1,10 @@
-import 'package:http/http.dart' as http;
+import 'dart:io';
 import 'package:html/parser.dart' show parse;
+import 'package:http/io_client.dart';
 
 Future<String> fetchHtml(String url) async {
-  final response = await http.get(Uri.parse(url));
+  final client = createHttpClient();
+  final response = await client.get(Uri.parse(url));
 
   if (response.statusCode == 200) {
     return response.body;
@@ -34,7 +36,13 @@ Future<String> ambilGambarKonten(String url) async {
     }
     return imgParse;
   } else {
-    print('No content div found');
     return "";
   }
+}
+
+IOClient createHttpClient() {
+  final ioc = HttpClient()
+    ..badCertificateCallback =
+        (X509Certificate cert, String host, int port) => true;
+  return IOClient(ioc);
 }

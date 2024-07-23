@@ -1,8 +1,8 @@
 import 'package:egov_news_app/halaman/berita_selengkapnya.dart';
 import 'package:egov_news_app/halaman/component/berita_baru_card.dart';
-import 'package:egov_news_app/halaman/halaman_beranda/component/spotlight_component.dart';
+import 'package:egov_news_app/halaman/component/spotlight_component.dart';
 import 'package:egov_news_app/halaman/halaman_detail_berita/halaman_detail_berita.dart';
-import 'package:egov_news_app/proses/getData.dart';
+import 'package:egov_news_app/proses/get_data.dart';
 import 'package:flutter/material.dart';
 
 class HalamanBeranda extends StatefulWidget {
@@ -116,7 +116,10 @@ class _HalamanBerandaState extends State<HalamanBeranda> {
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
-                            return Center(child: CircularProgressIndicator());
+                            return Center(
+                                child: CircularProgressIndicator(
+                              color: Color(0xFF1A434E),
+                            ));
                           } else if (snapshot.hasError) {
                             return Center(
                                 child: Text('Error: ${snapshot.error}'));
@@ -138,9 +141,9 @@ class _HalamanBerandaState extends State<HalamanBeranda> {
                                               HalamanDetailBerita(
                                             gambarBerita: data[index]["image"],
                                             judulBerita: data[index]["title"],
-                                            berita: "Ini isi berita",
                                             penulis: data[index]
                                                 ["organization_name"],
+                                            url: data[index]["link"],
                                           ),
                                         ),
                                       );
@@ -163,7 +166,9 @@ class _HalamanBerandaState extends State<HalamanBeranda> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => HalamanBeritaSelengkapnya(),
+                              builder: (context) => HalamanBeritaSelengkapnya(
+                                jenisBerita: "SINERGI",
+                              ),
                             ),
                           );
                         },

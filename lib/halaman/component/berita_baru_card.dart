@@ -31,6 +31,29 @@ Widget beritaBaruCard(
                   gambarBerita,
                   width: double.infinity,
                   fit: BoxFit.cover,
+                  loadingBuilder: (BuildContext context, Widget child,
+                      ImageChunkEvent? loadingProgress) {
+                    if (loadingProgress == null) {
+                      return child;
+                    } else {
+                      return Center(
+                        child: CircularProgressIndicator(
+                          color: Color(0xFF1A434E),
+                          value: loadingProgress.expectedTotalBytes != null
+                              ? loadingProgress.cumulativeBytesLoaded /
+                                  (loadingProgress.expectedTotalBytes ?? 1)
+                              : null,
+                        ),
+                      );
+                    }
+                  },
+                  errorBuilder: (context, error, stackTrace) {
+                    return Image.asset(
+                      "assets/gambar/news-thumbnail.png",
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                    );
+                  },
                 ),
               ),
             ),

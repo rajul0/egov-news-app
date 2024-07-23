@@ -1,5 +1,5 @@
 import 'package:egov_news_app/halaman/halaman_detail_berita/halaman_detail_berita.dart';
-import 'package:egov_news_app/proses/getData.dart';
+import 'package:egov_news_app/proses/get_data.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:shimmer/shimmer.dart';
@@ -101,14 +101,14 @@ class _SpotlightComponentState extends State<SpotlightComponent> {
             ),
           )
         : InkWell(
-            onTap: () {
+            onTap: () async {
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => HalamanDetailBerita(
                     gambarBerita: dataBerita![_selectedIndex]["image"],
                     judulBerita: dataBerita![_selectedIndex]["title"],
-                    berita: "Ini isi berita",
+                    url: dataBerita![_selectedIndex]["url"],
                     penulis: dataBerita![_selectedIndex]["organization_name"],
                   ),
                 ),

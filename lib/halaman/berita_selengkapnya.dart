@@ -1,10 +1,17 @@
 import 'package:egov_news_app/halaman/component/berita_baru_card.dart';
 import 'package:egov_news_app/halaman/halaman_detail_berita/halaman_detail_berita.dart';
-import 'package:egov_news_app/proses/getData.dart';
+import 'package:egov_news_app/proses/get_data.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class HalamanBeritaSelengkapnya extends StatefulWidget {
+  final jenisBerita;
+
+  const HalamanBeritaSelengkapnya({
+    Key? key,
+    required this.jenisBerita,
+  });
+
   @override
   _HalamanBeritaSelengkapnyaState createState() =>
       _HalamanBeritaSelengkapnyaState();
@@ -12,7 +19,8 @@ class HalamanBeritaSelengkapnya extends StatefulWidget {
 
 class _HalamanBeritaSelengkapnyaState extends State<HalamanBeritaSelengkapnya> {
   Key _key = UniqueKey();
-  static const _pageSize = 5;
+  int pagekey = 0;
+  static const _pageSize = 6;
   final PagingController<int, Feed> _pagingController =
       PagingController(firstPageKey: 1);
 
@@ -32,7 +40,16 @@ class _HalamanBeritaSelengkapnyaState extends State<HalamanBeritaSelengkapnya> {
 
   Future<void> _fetchFeeds(int pageKey) async {
     try {
-      final data = await ambilBerita(_pageSize, pageKey: pageKey);
+      List data = [];
+
+      if (widget.jenisBerita == "SINERGI") {
+        data = await ambilBerita(_pageSize, pageKey: pageKey);
+      } else if (widget.jenisBerita == "INONG") {
+        data = await ambilBeritaInong(_pageSize, pageKey: pageKey);
+      } else if (widget.jenisBerita == "AGAM") {
+        data = await ambilBeritaAgam(_pageSize, pageKey: pageKey);
+      }
+
       final newFeeds = data.map((json) => Feed.fromJson(json)).toList();
 
       final isLastPage = newFeeds.length < _pageSize;
@@ -40,6 +57,7 @@ class _HalamanBeritaSelengkapnyaState extends State<HalamanBeritaSelengkapnya> {
         _pagingController.appendLastPage(newFeeds);
       } else {
         final nextPageKey = pageKey + 1;
+        pagekey = nextPageKey;
         _pagingController.appendPage(newFeeds, nextPageKey);
       }
     } catch (e) {
@@ -95,11 +113,16 @@ class _HalamanBeritaSelengkapnyaState extends State<HalamanBeritaSelengkapnya> {
                               fontWeight: FontWeight.w400),
                         ),
                         Text(
-                          "SINERGI",
+                          widget.jenisBerita == "SINERGI"
+                              ? "SINERGI"
+                              : widget.jenisBerita == "INONG"
+                                  ? "Informasi Gampong (INONG)"
+                                  : "Agregator Gampong (AGAM)",
                           style: TextStyle(
                               color: Color(0xFF1A434E),
                               fontFamily: "Mulish",
-                              fontSize: 24.0,
+                              fontSize:
+                                  widget.jenisBerita == "SINERGI" ? 24.0 : 20.0,
                               fontWeight: FontWeight.w700),
                         )
                       ],
@@ -111,27 +134,44 @@ class _HalamanBeritaSelengkapnyaState extends State<HalamanBeritaSelengkapnya> {
                 child: PagedListView<int, Feed>(
                   pagingController: _pagingController,
                   builderDelegate: PagedChildBuilderDelegate<Feed>(
-                      itemBuilder: (context, item, index) => Column(
-                            children: [
-                              beritaBaruCard(context, item.image, item.title,
-                                  item.organization_name, () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => HalamanDetailBerita(
-                                      gambarBerita: item.image,
-                                      judulBerita: item.title,
-                                      berita: "Ini isi berita",
-                                      penulis: item.organization_name,
-                                    ),
-                                  ),
-                                );
-                              }),
-                              SizedBox(
-                                height: 25.0,
+                    itemBuilder: (context, item, index) => Column(
+                      children: [
+                        beritaBaruCard(context, item.image, item.title,
+                            item.organization_name, () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => HalamanDetailBerita(
+                                gambarBerita: item.image,
+                                judulBerita: item.title,
+                                url: item.url,
+                                penulis: item.organization_name,
                               ),
-                            ],
-                          )),
+                            ),
+                          );
+                        }),
+                        SizedBox(
+                          height: 25.0,
+                        ),
+                      ],
+                    ),
+                    newPageProgressIndicatorBuilder: (context) => Center(
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(Color(
+                            0xFF1A434E)), // Ganti dengan warna yang diinginkan
+                      ),
+                    ),
+                    firstPageProgressIndicatorBuilder: (context) => Center(
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(Color(
+                            0xFF1A434E)), // Ganti dengan warna yang diinginkan
+                      ),
+                    ),
+                    firstPageErrorIndicatorBuilder: (context) => Center(
+                        child: Text('Something went wrong. Please try again.')),
+                    noItemsFoundIndicatorBuilder: (context) =>
+                        Center(child: Text('No items found')),
+                  ),
                 ),
               ),
             ],
@@ -146,11 +186,13 @@ class Feed {
   final String title;
   final String image;
   final String organization_name;
+  final String url;
 
   Feed({
     required this.title,
     required this.image,
     required this.organization_name,
+    required this.url,
   });
 
   factory Feed.fromJson(Map<String, dynamic> json) {
@@ -158,6 +200,7 @@ class Feed {
       title: json['title'],
       image: json['image'],
       organization_name: json['organization_name'],
+      url: json['link'],
     );
   }
 }

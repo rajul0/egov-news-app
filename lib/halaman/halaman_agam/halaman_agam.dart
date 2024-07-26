@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:egov_news_app/halaman/berita_selengkapnya.dart';
 import 'package:egov_news_app/halaman/component/berita_baru_card.dart';
 import 'package:egov_news_app/halaman/component/spotlight_component.dart';
@@ -128,31 +129,38 @@ class _HalamanAgamState extends State<HalamanAgam> {
                             List data = snapshot.data as List;
                             return Column(
                               children: List.generate(data.length, (index) {
-                                return Column(
-                                  children: [
-                                    beritaBaruCard(
-                                        context,
-                                        data[index]['image'],
-                                        data[index]['title'],
-                                        data[index]['organization_name'], () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              HalamanDetailBerita(
-                                            gambarBerita: data[index]["image"],
-                                            judulBerita: data[index]["title"],
-                                            url: data[index]["link"],
-                                            penulis: data[index]
-                                                ["organization_name"],
-                                          ),
+                                return OpenContainer(
+                                  closedElevation: 0.0,
+                                  openElevation: 0.0,
+                                  transitionType:
+                                      ContainerTransitionType.fadeThrough,
+                                  transitionDuration:
+                                      Duration(milliseconds: 500),
+                                  closedBuilder: (BuildContext context,
+                                      VoidCallback openContainer) {
+                                    return Column(
+                                      children: [
+                                        beritaBaruCard(
+                                          context,
+                                          data[index]['image'],
+                                          data[index]['title'],
+                                          data[index]['organization_name'],
+                                          openContainer,
                                         ),
-                                      );
-                                    }),
-                                    SizedBox(
-                                      height: 20.0,
-                                    ),
-                                  ],
+                                        SizedBox(
+                                          height: 20.0,
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                  openBuilder: (context, action) {
+                                    return HalamanDetailBerita(
+                                      gambarBerita: data[index]["image"],
+                                      judulBerita: data[index]["title"],
+                                      penulis: data[index]["organization_name"],
+                                      url: data[index]["link"],
+                                    );
+                                  },
                                 );
                               }),
                             );

@@ -4,6 +4,7 @@ import 'package:egov_news_app/halaman/component/spotlight_component.dart';
 import 'package:egov_news_app/halaman/halaman_detail_berita/halaman_detail_berita.dart';
 import 'package:egov_news_app/proses/get_data.dart';
 import 'package:flutter/material.dart';
+import 'package:animations/animations.dart';
 
 class HalamanBeranda extends StatefulWidget {
   const HalamanBeranda({super.key});
@@ -127,31 +128,38 @@ class _HalamanBerandaState extends State<HalamanBeranda> {
                             List data = snapshot.data as List;
                             return Column(
                               children: List.generate(data.length, (index) {
-                                return Column(
-                                  children: [
-                                    beritaBaruCard(
-                                        context,
-                                        data[index]['image'],
-                                        data[index]['title'],
-                                        data[index]['organization_name'], () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              HalamanDetailBerita(
-                                            gambarBerita: data[index]["image"],
-                                            judulBerita: data[index]["title"],
-                                            penulis: data[index]
-                                                ["organization_name"],
-                                            url: data[index]["link"],
-                                          ),
+                                return OpenContainer(
+                                  closedElevation: 0.0,
+                                  openElevation: 0.0,
+                                  transitionType:
+                                      ContainerTransitionType.fadeThrough,
+                                  transitionDuration:
+                                      Duration(milliseconds: 500),
+                                  closedBuilder: (BuildContext context,
+                                      VoidCallback openContainer) {
+                                    return Column(
+                                      children: [
+                                        beritaBaruCard(
+                                          context,
+                                          data[index]['image'],
+                                          data[index]['title'],
+                                          data[index]['organization_name'],
+                                          openContainer,
                                         ),
-                                      );
-                                    }),
-                                    SizedBox(
-                                      height: 20.0,
-                                    ),
-                                  ],
+                                        SizedBox(
+                                          height: 20.0,
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                  openBuilder: (context, action) {
+                                    return HalamanDetailBerita(
+                                      gambarBerita: data[index]["image"],
+                                      judulBerita: data[index]["title"],
+                                      penulis: data[index]["organization_name"],
+                                      url: data[index]["link"],
+                                    );
+                                  },
                                 );
                               }),
                             );

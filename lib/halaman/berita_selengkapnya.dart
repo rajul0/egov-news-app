@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:egov_news_app/halaman/component/berita_baru_card.dart';
 import 'package:egov_news_app/halaman/halaman_detail_berita/halaman_detail_berita.dart';
 import 'package:egov_news_app/halaman/halaman_webview/halaman_webview_detail_berita.dart';
@@ -135,39 +136,42 @@ class _HalamanBeritaSelengkapnyaState extends State<HalamanBeritaSelengkapnya> {
                 child: PagedListView<int, Feed>(
                   pagingController: _pagingController,
                   builderDelegate: PagedChildBuilderDelegate<Feed>(
-                    itemBuilder: (context, item, index) => Column(
-                      children: [
-                        beritaBaruCard(context, item.image, item.title,
-                            item.organization_name, () {
-                          if (item.url
-                                  .contains("iemasenuleekareng.gampong.id") ||
-                              item.url.contains(
-                                  "lhongcut-gp.bandaacehkota.go.id")) {
-                            Navigator.push(
+                    itemBuilder: (context, item, index) => OpenContainer(
+                      closedElevation: 0.0,
+                      openElevation: 0.0,
+                      transitionType: ContainerTransitionType.fadeThrough,
+                      transitionDuration: Duration(milliseconds: 500),
+                      closedBuilder:
+                          (BuildContext context, VoidCallback openContainer) {
+                        return Column(
+                          children: [
+                            beritaBaruCard(
                               context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    HalamanWebViewDetailBerita(url: item.url),
-                              ),
-                            );
-                          } else {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => HalamanDetailBerita(
-                                  gambarBerita: item.image,
-                                  judulBerita: item.title,
-                                  url: item.url,
-                                  penulis: item.organization_name,
-                                ),
-                              ),
-                            );
-                          }
-                        }),
-                        SizedBox(
-                          height: 25.0,
-                        ),
-                      ],
+                              item.image,
+                              item.title,
+                              item.organization_name,
+                              openContainer,
+                            ),
+                            SizedBox(
+                              height: 25.0,
+                            ),
+                          ],
+                        );
+                      },
+                      openBuilder: (context, action) {
+                        if (item.url.contains("iemasenuleekareng.gampong.id") ||
+                            item.url
+                                .contains("lhongcut-gp.bandaacehkota.go.id")) {
+                          return HalamanWebViewDetailBerita(url: item.url);
+                        } else {
+                          return HalamanDetailBerita(
+                            gambarBerita: item.image,
+                            judulBerita: item.title,
+                            url: item.url,
+                            penulis: item.organization_name,
+                          );
+                        }
+                      },
                     ),
                     newPageProgressIndicatorBuilder: (context) => Center(
                       child: CircularProgressIndicator(

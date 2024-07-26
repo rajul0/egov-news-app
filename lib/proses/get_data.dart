@@ -97,6 +97,8 @@ Future<Map> ambilKontenBerita(String url) async {
       contentDiv = document.querySelector('div.col-md-12');
     } else if (url.contains("iemasenuleekareng.gampong.id")) {
       contentDiv = document.querySelector('div.news-content');
+    } else if (url.contains("sdn2bna.sch.id")) {
+      contentDiv = document.querySelector('div.info');
     } else if (url.contains("disdikbud.bandaacehkota.go.id")) {
       contentDiv =
           document.querySelector('div.bs-blog-post')!.querySelector("article");

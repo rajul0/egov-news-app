@@ -47,7 +47,6 @@ class _HalamanDetailBeritaState extends State<HalamanDetailBerita> {
         setState(() {
           konten = data;
           isLoading = false;
-          print(konten);
         });
       }
     } catch (e) {
@@ -56,7 +55,6 @@ class _HalamanDetailBeritaState extends State<HalamanDetailBerita> {
           isLoading = false;
         });
       }
-      print('Error fetching data: $e');
     }
   }
 

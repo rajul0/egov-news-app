@@ -2,21 +2,28 @@ import 'package:egov_news_app/halaman/component/halaman_webview_custom.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class HalamanStatistik extends StatefulWidget {
-  const HalamanStatistik({super.key});
+class HalamanWebViewDetailBerita extends StatefulWidget {
+  final String url;
+  const HalamanWebViewDetailBerita({
+    super.key,
+    required this.url,
+  });
 
   @override
-  State<HalamanStatistik> createState() => _HalamanStatistikState();
+  State<HalamanWebViewDetailBerita> createState() =>
+      _HalamanWebViewDetailBeritaState();
 }
 
-class _HalamanStatistikState extends State<HalamanStatistik> {
+class _HalamanWebViewDetailBeritaState
+    extends State<HalamanWebViewDetailBerita> {
   late final WebViewController controller;
   @override
   void initState() {
     super.initState();
     controller = WebViewController()
-      ..loadRequest(
-          Uri.parse('https://sinergi.bandaacehkota.go.id/statistics'));
+      ..loadRequest(Uri.parse(
+        widget.url,
+      ));
   }
 
   @override

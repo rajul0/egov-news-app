@@ -1,5 +1,6 @@
 import 'package:egov_news_app/halaman/component/berita_baru_card.dart';
 import 'package:egov_news_app/halaman/halaman_detail_berita/halaman_detail_berita.dart';
+import 'package:egov_news_app/halaman/halaman_webview/halaman_webview_detail_berita.dart';
 import 'package:egov_news_app/proses/get_data.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -138,17 +139,30 @@ class _HalamanBeritaSelengkapnyaState extends State<HalamanBeritaSelengkapnya> {
                       children: [
                         beritaBaruCard(context, item.image, item.title,
                             item.organization_name, () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => HalamanDetailBerita(
-                                gambarBerita: item.image,
-                                judulBerita: item.title,
-                                url: item.url,
-                                penulis: item.organization_name,
+                          if (item.url
+                                  .contains("iemasenuleekareng.gampong.id") ||
+                              item.url.contains(
+                                  "lhongcut-gp.bandaacehkota.go.id")) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    HalamanWebViewDetailBerita(url: item.url),
                               ),
-                            ),
-                          );
+                            );
+                          } else {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => HalamanDetailBerita(
+                                  gambarBerita: item.image,
+                                  judulBerita: item.title,
+                                  url: item.url,
+                                  penulis: item.organization_name,
+                                ),
+                              ),
+                            );
+                          }
                         }),
                         SizedBox(
                           height: 25.0,

@@ -13,7 +13,7 @@ Future<List> ambilBerita(banyakBerita, {pageKey = 1}) async {
     List clearData = [];
     for (var i in data["data"]) {
       if (i["image"] == "###") {
-        var gambarKonten = await ambilGambarKonten(i["link"]);
+        var gambarKonten = "assets/gambar/news-thumbnail.png";
         i["image"] = gambarKonten;
         clearData.add(i);
       } else {
@@ -36,7 +36,7 @@ Future<List> ambilBeritaInong(banyakBerita, {pageKey = 1}) async {
     List clearData = [];
     for (var i in data["data"]) {
       if (i["image"] == "###") {
-        var gambarKonten = await ambilGambarKonten(i["link"]);
+        var gambarKonten = "assets/gambar/news-thumbnail.png";
 
         i["image"] = gambarKonten;
 
@@ -60,7 +60,7 @@ Future<List> ambilBeritaAgam(banyakBerita, {pageKey = 1}) async {
     List clearData = [];
     for (var i in data["data"]) {
       if (i["image"] == "###") {
-        var gambarKonten = await ambilGambarKonten(i["link"]);
+        var gambarKonten = "assets/gambar/news-thumbnail.png";
 
         i["image"] = gambarKonten;
 
@@ -90,7 +90,8 @@ Future<Map> ambilKontenBerita(String url) async {
 
     if (url.contains("rsum.bandaacehkota.go.id")) {
       contentDiv = document.querySelector('div.med_single_content');
-    } else if (url.contains("disdukcapil.bandaacehkota.go.id")) {
+    } else if (url.contains("disdukcapil.bandaacehkota.go.id") ||
+        url.contains("disnaker.bandaacehkota.go.id")) {
       contentDiv = document.querySelector('div.post-content');
     } else if (url.contains("dishub.bandaacehkota.go.id")) {
       contentDiv = document.querySelector('div.col-md-12');
@@ -99,23 +100,26 @@ Future<Map> ambilKontenBerita(String url) async {
     } else if (url.contains("disdikbud.bandaacehkota.go.id")) {
       contentDiv =
           document.querySelector('div.bs-blog-post')!.querySelector("article");
+    } else if (url.contains("bappeda.bandaacehkota.go.id")) {
+      contentDiv = document.querySelector('div.post-content-inner');
     } else {
       contentDiv = document.querySelector('div.entry-content');
-      print(contentDiv!.outerHtml);
     }
 
     if (contentDiv != null) {
-      final semuaKonten = contentDiv.querySelectorAll('p');
       StringBuffer buffer = StringBuffer();
+
+      final semuaKonten = contentDiv.querySelectorAll('p');
 
       for (var konten in semuaKonten) {
         // ambil gambar konten jika ada
         if (konten.children.isNotEmpty) {
-          for (var img in konten.children) {
-            final src = img.attributes['src'];
-            gambarKonten.add(src);
+          for (var child in konten.children) {
+            if (child.localName == "img") {
+              final src = child.attributes['src'];
+              gambarKonten.add(src);
+            }
           }
-          kontenBerita["gambar_konten"] = gambarKonten;
         }
 
         buffer.write(konten.text); // tulis teks dalam tag p ke buffer
@@ -126,6 +130,8 @@ Future<Map> ambilKontenBerita(String url) async {
         }
       }
       kontenBerita["konten_teks"] = buffer.toString();
+      kontenBerita["gambar_konten"] = gambarKonten;
+
       return kontenBerita;
     } else {
       kontenBerita["konten_teks"] =

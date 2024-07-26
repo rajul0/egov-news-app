@@ -108,7 +108,7 @@ class _SpotlightComponentState extends State<SpotlightComponent> {
                   builder: (context) => HalamanDetailBerita(
                     gambarBerita: dataBerita![_selectedIndex]["image"],
                     judulBerita: dataBerita![_selectedIndex]["title"],
-                    url: dataBerita![_selectedIndex]["url"],
+                    url: dataBerita![_selectedIndex]["link"],
                     penulis: dataBerita![_selectedIndex]["organization_name"],
                   ),
                 ),

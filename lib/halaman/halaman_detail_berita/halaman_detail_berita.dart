@@ -47,6 +47,7 @@ class _HalamanDetailBeritaState extends State<HalamanDetailBerita> {
         setState(() {
           konten = data;
           isLoading = false;
+          print(konten);
         });
       }
     } catch (e) {
@@ -61,147 +62,219 @@ class _HalamanDetailBeritaState extends State<HalamanDetailBerita> {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              width: double.infinity,
-              height: 370.0,
-              decoration: BoxDecoration(
-                color: Color(0xFFBDBDBD),
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(20.0),
-                  bottomRight: Radius.circular(20.0),
-                ),
-              ),
-              child: Stack(
-                fit: StackFit.expand,
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(20.0),
-                        bottomRight: Radius.circular(20.0)),
-                    child: isLoading
-                        ? const Center(
-                            child: CircularProgressIndicator(
-                            color: Color(0xFF1A434E),
-                          ))
-                        : Image.network(
-                            konten["gambar_konten"] == []
-                                ? konten["gambar_konten"][0]
-                                : widget.gambarBerita,
-                            width: double.infinity,
-                            fit: BoxFit.cover,
-                            loadingBuilder: (BuildContext context, Widget child,
-                                ImageChunkEvent? loadingProgress) {
-                              if (loadingProgress == null) {
-                                return child;
-                              } else {
-                                return Center(
-                                  child: CircularProgressIndicator(
-                                    color: Color(0xFF1A434E),
-                                    value: loadingProgress.expectedTotalBytes !=
-                                            null
-                                        ? loadingProgress
-                                                .cumulativeBytesLoaded /
-                                            (loadingProgress
-                                                    .expectedTotalBytes ??
-                                                1)
-                                        : null,
-                                  ),
-                                );
-                              }
-                            },
-                            errorBuilder: (context, error, stackTrace) {
-                              return Image.asset(
-                                "assets/gambar/news-thumbnail.png",
-                                width: double.infinity,
-                                fit: BoxFit.cover,
-                              );
-                            },
-                          ),
+        child: isLoading
+            ? Container(
+                height: screenHeight,
+                width: double.infinity,
+                child: Center(
+                  child: CircularProgressIndicator(
+                    color: Color(0xFF1A434E),
                   ),
-                  Positioned(
-                    top: 50.0,
-                    left: 24.0,
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      borderRadius: BorderRadius.circular(50.0),
-                      child: Ink(
-                        child: Image.asset(
-                          "assets/gambar/back-logo.png",
-                          width: 54.0,
+                ),
+              )
+            : (konten["konten_teks"] == "Exception: Failed to load page")
+                ? Container(
+                    height: screenHeight,
+                    width: double.infinity,
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        "Gagal Memuat Halaman",
+                        style: TextStyle(
+                          color: Color(0xFF95A6AA),
+                          fontSize: 14.0,
+                          fontFamily: 'Mulish',
                         ),
                       ),
-                    ),
-                  ),
-                  Positioned(
-                    bottom: 24.0,
-                    left: 24.0,
-                    child: Container(
-                      width: screenWidth - 48.0,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            widget.judulBerita,
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: "Mulish",
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20.0),
-                            softWrap: true,
-                            maxLines: 3,
-                            overflow: TextOverflow.ellipsis,
+                    ))
+                : Column(
+                    children: [
+                      Container(
+                        width: double.infinity,
+                        height: 370.0,
+                        decoration: BoxDecoration(
+                          color: Color(0xFFBDBDBD),
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(20.0),
+                            bottomRight: Radius.circular(20.0),
                           ),
-                          Text(
-                            "By ${widget.penulis}",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: "Mulish",
-                                fontSize: 14.0),
-                          ),
-                        ],
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                left: 24.0,
-                top: 30.0,
-                right: 24.0,
-              ),
-              child: Column(
-                children: [
-                  isLoading
-                      ? const Center(
-                          child: CircularProgressIndicator(
-                          color: Color(0xFF1A434E),
-                        ))
-                      // ignore: unnecessary_null_comparison
-                      : konten == null
-                          ? Center(child: Text('Failed to load content'))
-                          : Text(
-                              konten["konten_teks"],
-                              style: TextStyle(
-                                color: Color(0xFF95A6AA),
-                                fontSize: 14.0,
-                                fontFamily: 'Mulish',
-                              ),
-                              textAlign: TextAlign.justify,
+                        ),
+                        child: Stack(
+                          fit: StackFit.expand,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.only(
+                                  bottomLeft: Radius.circular(20.0),
+                                  bottomRight: Radius.circular(20.0)),
+                              child: isLoading
+                                  ? const Center(
+                                      child: CircularProgressIndicator(
+                                      color: Color(0xFF1A434E),
+                                    ))
+                                  : Image.network(
+                                      konten["gambar_konten"].isNotEmpty
+                                          ? konten["gambar_konten"][0]
+                                          : widget.gambarBerita,
+                                      width: double.infinity,
+                                      fit: BoxFit.cover,
+                                      loadingBuilder: (BuildContext context,
+                                          Widget child,
+                                          ImageChunkEvent? loadingProgress) {
+                                        if (loadingProgress == null) {
+                                          return child;
+                                        } else {
+                                          return Center(
+                                            child: CircularProgressIndicator(
+                                              color: Color(0xFF1A434E),
+                                              value: loadingProgress
+                                                          .expectedTotalBytes !=
+                                                      null
+                                                  ? loadingProgress
+                                                          .cumulativeBytesLoaded /
+                                                      (loadingProgress
+                                                              .expectedTotalBytes ??
+                                                          1)
+                                                  : null,
+                                            ),
+                                          );
+                                        }
+                                      },
+                                      errorBuilder:
+                                          (context, error, stackTrace) {
+                                        return Image.asset(
+                                          "assets/gambar/news-thumbnail.png",
+                                          width: double.infinity,
+                                          fit: BoxFit.cover,
+                                        );
+                                      },
+                                    ),
                             ),
-                ],
-              ),
-            )
-          ],
-        ),
+                            Positioned(
+                              top: 50.0,
+                              left: 24.0,
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                                borderRadius: BorderRadius.circular(50.0),
+                                child: Ink(
+                                  child: Image.asset(
+                                    "assets/gambar/back-logo.png",
+                                    width: 54.0,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              bottom: 24.0,
+                              left: 24.0,
+                              child: Container(
+                                width: screenWidth - 48.0,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      widget.judulBerita,
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontFamily: "Mulish",
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20.0),
+                                      softWrap: true,
+                                      maxLines: 3,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    Text(
+                                      "By ${widget.penulis}",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontFamily: "Mulish",
+                                          fontSize: 14.0),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                          left: 24.0,
+                          top: 30.0,
+                          right: 24.0,
+                        ),
+                        child: Column(
+                          children: [
+                            isLoading
+                                ? const Center(
+                                    child: CircularProgressIndicator(
+                                    color: Color(0xFF1A434E),
+                                  ))
+                                // ignore: unnecessary_null_comparison
+                                : konten == null
+                                    ? Center(
+                                        child: Text('Failed to load content'))
+                                    : Text(
+                                        konten["konten_teks"],
+                                        style: TextStyle(
+                                          color: Color(0xFF95A6AA),
+                                          fontSize: 14.0,
+                                          fontFamily: 'Mulish',
+                                        ),
+                                        textAlign: TextAlign.justify,
+                                      ),
+                            //  Column(
+                            //         children: List.generate(
+                            //             konten["gambar_konten"].length,
+                            //             (index) {
+                            //         return Container(
+                            //           child: Image.network(
+                            //             konten["gambar_konten"][index],
+                            //             width: double.infinity,
+                            //             fit: BoxFit.cover,
+                            //             loadingBuilder: (BuildContext context,
+                            //                 Widget child,
+                            //                 ImageChunkEvent? loadingProgress) {
+                            //               if (loadingProgress == null) {
+                            //                 return child;
+                            //               } else {
+                            //                 return Center(
+                            //                   child: CircularProgressIndicator(
+                            //                     color: Color(0xFF1A434E),
+                            //                     value: loadingProgress
+                            //                                 .expectedTotalBytes !=
+                            //                             null
+                            //                         ? loadingProgress
+                            //                                 .cumulativeBytesLoaded /
+                            //                             (loadingProgress
+                            //                                     .expectedTotalBytes ??
+                            //                                 1)
+                            //                         : null,
+                            //                   ),
+                            //                 );
+                            //               }
+                            //             },
+                            //             errorBuilder:
+                            //                 (context, error, stackTrace) {
+                            //               return Image.asset(
+                            //                 "assets/gambar/news-thumbnail.png",
+                            //                 width: double.infinity,
+                            //                 fit: BoxFit.cover,
+                            //               );
+                            //             },
+                            //           ),
+                            //         );
+                            //       }))
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
       ),
     );
   }

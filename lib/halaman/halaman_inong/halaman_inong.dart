@@ -1,9 +1,9 @@
 import 'package:animations/animations.dart';
-import 'package:egov_news_app/halaman/berita_selengkapnya.dart';
-import 'package:egov_news_app/halaman/component/berita_baru_card.dart';
-import 'package:egov_news_app/halaman/component/spotlight_component.dart';
-import 'package:egov_news_app/halaman/halaman_detail_berita/halaman_detail_berita.dart';
-import 'package:egov_news_app/proses/get_data.dart';
+import 'package:SINERGI/halaman/berita_selengkapnya.dart';
+import 'package:SINERGI/halaman/component/berita_baru_card.dart';
+import 'package:SINERGI/halaman/component/spotlight_component.dart';
+import 'package:SINERGI/halaman/halaman_detail_berita/halaman_detail_berita.dart';
+import 'package:SINERGI/proses/get_data.dart';
 import 'package:flutter/material.dart';
 
 class HalamanInong extends StatefulWidget {

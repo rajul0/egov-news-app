@@ -151,6 +151,9 @@ class _HalamanDetailBeritaState extends State<HalamanDetailBerita> {
                                       },
                                     ),
                             ),
+                            Container(
+                              color: Colors.black.withOpacity(0.4),
+                            ),
                             Positioned(
                               top: 50.0,
                               left: 24.0,
@@ -200,7 +203,7 @@ class _HalamanDetailBeritaState extends State<HalamanDetailBerita> {
                           ],
                         ),
                       ),
-                      Padding(
+                      Container(
                         padding: EdgeInsets.only(
                           left: 24.0,
                           top: 30.0,
@@ -220,54 +223,12 @@ class _HalamanDetailBeritaState extends State<HalamanDetailBerita> {
                                     : Text(
                                         konten["konten_teks"],
                                         style: TextStyle(
-                                          color: Color(0xFF95A6AA),
+                                          color: Color(0xFF667A7F),
                                           fontSize: 14.0,
                                           fontFamily: 'Mulish',
                                         ),
                                         textAlign: TextAlign.justify,
                                       ),
-                            //  Column(
-                            //         children: List.generate(
-                            //             konten["gambar_konten"].length,
-                            //             (index) {
-                            //         return Container(
-                            //           child: Image.network(
-                            //             konten["gambar_konten"][index],
-                            //             width: double.infinity,
-                            //             fit: BoxFit.cover,
-                            //             loadingBuilder: (BuildContext context,
-                            //                 Widget child,
-                            //                 ImageChunkEvent? loadingProgress) {
-                            //               if (loadingProgress == null) {
-                            //                 return child;
-                            //               } else {
-                            //                 return Center(
-                            //                   child: CircularProgressIndicator(
-                            //                     color: Color(0xFF1A434E),
-                            //                     value: loadingProgress
-                            //                                 .expectedTotalBytes !=
-                            //                             null
-                            //                         ? loadingProgress
-                            //                                 .cumulativeBytesLoaded /
-                            //                             (loadingProgress
-                            //                                     .expectedTotalBytes ??
-                            //                                 1)
-                            //                         : null,
-                            //                   ),
-                            //                 );
-                            //               }
-                            //             },
-                            //             errorBuilder:
-                            //                 (context, error, stackTrace) {
-                            //               return Image.asset(
-                            //                 "assets/gambar/news-thumbnail.png",
-                            //                 width: double.infinity,
-                            //                 fit: BoxFit.cover,
-                            //               );
-                            //             },
-                            //           ),
-                            //         );
-                            //       }))
                           ],
                         ),
                       )

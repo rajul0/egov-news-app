@@ -69,7 +69,15 @@ class _HalamanBerandaState extends State<HalamanBeranda> {
                             fontFamily: "Mulish",
                             fontSize: 24.0,
                             fontWeight: FontWeight.w700),
-                      )
+                      ),
+                      Text(
+                        "( SISTEM INFORMASI BERITA GAMPONG DAN INSTANSI KOTA BANDA ACEH )",
+                        style: TextStyle(
+                            color: Color(0xFF95A6AA),
+                            fontFamily: "Mulish",
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.w400),
+                      ),
                     ],
                   ),
                 ),

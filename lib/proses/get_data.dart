@@ -3,10 +3,13 @@ import 'package:SINERGI/proses/parsing_data.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+final apiUrl = dotenv.env['API_URL'];
 
 Future<List> ambilBerita(banyakBerita, {pageKey = 1}) async {
-  final response = await http.get(Uri.parse(
-      'https://sinergi.bandaacehkota.go.id/api/feeds?limit=$banyakBerita&&page=$pageKey'));
+  final response = await http
+      .get(Uri.parse('$apiUrl/feeds?limit=$banyakBerita&&page=$pageKey'));
 
   if (response.statusCode == 200) {
     var data = jsonDecode(response.body);
@@ -28,8 +31,8 @@ Future<List> ambilBerita(banyakBerita, {pageKey = 1}) async {
 }
 
 Future<List> ambilBeritaInong(banyakBerita, {pageKey = 1}) async {
-  final response = await http.get(Uri.parse(
-      'https://sinergi.bandaacehkota.go.id/api/inong?limit=$banyakBerita&&page=$pageKey'));
+  final response = await http
+      .get(Uri.parse('$apiUrl/inong?limit=$banyakBerita&&page=$pageKey'));
 
   if (response.statusCode == 200) {
     var data = jsonDecode(response.body);
@@ -52,8 +55,8 @@ Future<List> ambilBeritaInong(banyakBerita, {pageKey = 1}) async {
 }
 
 Future<List> ambilBeritaAgam(banyakBerita, {pageKey = 1}) async {
-  final response = await http.get(Uri.parse(
-      'https://sinergi.bandaacehkota.go.id/api/agam?limit=$banyakBerita&&page=$pageKey'));
+  final response = await http
+      .get(Uri.parse('$apiUrl/agam?limit=$banyakBerita&&page=$pageKey'));
 
   if (response.statusCode == 200) {
     var data = jsonDecode(response.body);

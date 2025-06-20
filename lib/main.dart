@@ -2,8 +2,10 @@ import 'package:SINERGI/halaman/beranda_navbar.dart';
 import 'package:SINERGI/halaman/halaman_awal.dart';
 import 'package:SINERGI/halaman/halaman_beranda/halaman_beranda.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() {
+Future<void> main() async {
+  await dotenv.load();
   runApp(const NewsApp());
 }
 

@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:SINERGI/proses/parsing_data.dart';
+import 'package:sinergi/proses/parsing_data.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart' as http;

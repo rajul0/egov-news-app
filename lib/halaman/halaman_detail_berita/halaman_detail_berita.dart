@@ -1,4 +1,4 @@
-import 'package:SINERGI/proses/get_data.dart';
+import 'package:sinergi/proses/get_data.dart';
 import 'package:flutter/material.dart';
 
 class HalamanDetailBerita extends StatefulWidget {

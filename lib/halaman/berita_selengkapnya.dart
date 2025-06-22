@@ -1,8 +1,8 @@
 import 'package:animations/animations.dart';
-import 'package:SINERGI/halaman/component/berita_baru_card.dart';
-import 'package:SINERGI/halaman/halaman_detail_berita/halaman_detail_berita.dart';
-import 'package:SINERGI/halaman/halaman_webview/halaman_webview_detail_berita.dart';
-import 'package:SINERGI/proses/get_data.dart';
+import 'package:sinergi/halaman/component/berita_baru_card.dart';
+import 'package:sinergi/halaman/halaman_detail_berita/halaman_detail_berita.dart';
+import 'package:sinergi/halaman/halaman_webview/halaman_webview_detail_berita.dart';
+import 'package:sinergi/proses/get_data.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 

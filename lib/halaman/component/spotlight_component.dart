@@ -1,6 +1,6 @@
 import 'package:animations/animations.dart';
-import 'package:SINERGI/halaman/halaman_detail_berita/halaman_detail_berita.dart';
-import 'package:SINERGI/proses/get_data.dart';
+import 'package:sinergi/halaman/halaman_detail_berita/halaman_detail_berita.dart';
+import 'package:sinergi/proses/get_data.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:shimmer/shimmer.dart';

@@ -1,4 +1,4 @@
-import 'package:SINERGI/halaman/component/halaman_webview_custom.dart';
+import 'package:sinergi/halaman/component/halaman_webview_custom.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 

@@ -1,7 +1,7 @@
-import 'package:SINERGI/halaman/halaman_agam/halaman_agam.dart';
-import 'package:SINERGI/halaman/halaman_beranda/halaman_beranda.dart';
-import 'package:SINERGI/halaman/halaman_inong/halaman_inong.dart';
-import 'package:SINERGI/halaman/halaman_statistik/halaman_statistik.dart';
+import 'package:sinergi/halaman/halaman_agam/halaman_agam.dart';
+import 'package:sinergi/halaman/halaman_beranda/halaman_beranda.dart';
+import 'package:sinergi/halaman/halaman_inong/halaman_inong.dart';
+import 'package:sinergi/halaman/halaman_statistik/halaman_statistik.dart';
 import 'package:flutter/material.dart';
 
 class BerandaNavbar extends StatefulWidget {
